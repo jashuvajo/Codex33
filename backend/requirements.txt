@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+httpx
+websockets
+python-dotenv
+pydantic-settings
+redis
+asyncpg
+orjson
+prometheus-client

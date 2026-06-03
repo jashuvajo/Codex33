@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: nexusquant-backend
+    env: docker
+    rootDir: backend
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: UPSTOX_ACCESS_TOKEN
+        sync: false
+      - key: UPSTOX_CLIENT_ID
+        sync: false
+      - key: UPSTOX_REDIRECT_URI
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: nexusquant-redis
+          property: connectionString
+      - key: POSTGRES_DSN
+        fromDatabase:
+          name: nexusquant-postgres
+          property: connectionString
+      - key: TELEMETRY_INTERVAL_SECONDS
+        value: "1"
+      - key: STALE_FEED_SECONDS
+        value: "3"
+
+  - type: redis
+    name: nexusquant-redis
+    plan: starter
+
+databases:
+  - name: nexusquant-postgres
+    plan: starter

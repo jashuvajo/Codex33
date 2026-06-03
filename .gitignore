@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.env
+.env.*
+*.pyc
+*.pyo
+*.pyd
+*.log
+node_modules/
+dist/
+.DS_Store
+*.tsbuildinfo
