@@ -35,4 +35,4 @@ services:
 
 databases:
   - name: nexusquant-postgres
-    plan: starter
+    plan: basic-1gb
