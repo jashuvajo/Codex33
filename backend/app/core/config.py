@@ -1,5 +1,6 @@
 from functools import lru_cache
-from pydantic import Field
+
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -20,8 +21,14 @@ class Settings(BaseSettings):
     upstox_client_id: str = Field(default="", alias="UPSTOX_CLIENT_ID")
     upstox_redirect_uri: str = Field(default="", alias="UPSTOX_REDIRECT_URI")
 
-    redis_url: str = "redis://localhost:6379/0"
-    postgres_dsn: str = "postgresql://postgres:postgres@localhost:5432/nexusquant"
+    redis_url: str = Field(
+        default="redis://localhost:6379/0",
+        validation_alias=AliasChoices("REDIS_URL", "REDIS_PRIVATE_URL"),
+    )
+    postgres_dsn: str = Field(
+        default="postgresql://postgres:postgres@localhost:5432/nexusquant",
+        validation_alias=AliasChoices("POSTGRES_DSN", "DATABASE_URL", "DATABASE_PRIVATE_URL"),
+    )
 
     # Comma-separated instrument keys as expected by Upstox
     instrument_keys: str = "NSE_INDEX|Nifty 50,BSE_INDEX|SENSEX"
