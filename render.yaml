@@ -29,6 +29,9 @@ services:
   - type: redis
     name: nexusquant-redis
     plan: starter
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: allow all
 
 databases:
   - name: nexusquant-postgres
