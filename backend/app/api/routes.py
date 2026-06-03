@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, HTTPException, Response, WebSocket, WebSocketDisconnect
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from app.state import get_app_state
 
@@ -46,6 +47,11 @@ async def closed_market_analysis():
 async def trade_journal(limit: int = 50):
     state = get_app_state()
     return await state.state_store.latest_trade_rows(limit=limit)
+
+
+@router.get("/metrics")
+async def metrics():
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 
 @router.websocket("/ws/telemetry")
